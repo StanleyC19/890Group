@@ -1,1 +1,11 @@
-
+#20.2.9 (4-6)
+#Q4
+write_xlsx(bake_sale, path = "data/bake-sale.xlsx")
+#Q5
+write_xlsx(bake_sale, path = "data/bake-sale.xlsx")
+#Q6
+#Just like reading from a CSV, information on data type is lost when we read the data back in.
+This makes Excel files unreliable for caching interim results as well.
+##21.5.10 (1)
+#Q1
+# distinct() is a dbplyr verb that affects rows. Specifically, it creates subset distinct/ unique rows. 
