@@ -1,0 +1,54 @@
+# Exercise 9.5.1 (2-5)
+#...
+#Q2: What does geom_col() do? How is it different to geom_bar()?
+# A: The geom_col() function has different default stat than geom_bar(). The default stat of geom_col() is stat_identity(), which leaves the data as is.
+# A_Continued: The geom_col() function expects that the data contains x values and y values which represent the bar height.
+#...
+#Q3: Most geoms and stats come in pairs that are almost always used in concert. Read through the documentation and make a list of all the pairs. What do they have in common?
+#A: The following tables list the pairs of geoms and stats that are used in concert.
+...
+| geom                       | stat                       |
+|----------------------------|----------------------------|
+| `geom_bar()`               | `stat_count()`             |
+| `geom_bin2d()`             | `stat_bin_2d()`            |
+| `geom_boxplot()`           | `stat_boxplot()`           |
+| `geom_contour_filled()`    | `stat_contour_filled()`    |
+| `geom_contour()`           | `stat_contour()`           |
+| `geom_count()`             | `stat_sum()`               |
+| `geom_density_2d()`        | `stat_density_2d()`        |
+| `geom_density()`           | `stat_density()`           |
+| `geom_dotplot()`           | `stat_bindot()`            |
+| `geom_function()`          | `stat_function()`          |
+| `geom_sf()`                | `stat_sf()`                |
+| `geom_sf()`                | `stat_sf()`                |
+| `geom_smooth()`            | `stat_smooth()`            |
+| `geom_violin()`            | `stat_ydensity()`          |
+| `geom_hex()`               | `stat_bin_hex()`           |
+| `geom_qq_line()`           | `stat_qq_line()`           |
+| `geom_qq()`                | `stat_qq()`                |
+| `geom_quantile()`          | `stat_quantile()`          |
+
+#Table: Complementary geoms and stats
+
+#These pairs of geoms and stats tend to have their names in common, such `stat_smooth()` and `geom_smooth()`, and  be documented on the same help page.
+#The pairs of geoms and stats that are used in concert often have each other as the default stat (for a geom) or geom (for a stat).
+...
+#Q4: What variables does stat_smooth() compute? What parameters control its behavior?
+#A: The function stat_smooth() calculates the following variables:
+#y: predicted value
+#ymin: lower value of the confidence interval
+#ymax: the upper value of the confidence interval
+#se: standard error
+#The “Computed Variables” section of the stat_smooth() documentation contains these variables.
+...
+#The parameters that control the behavior of stat_smooth() include
+#method: the method used to
+#formula: the formula are parameters such as method which determines which method is used to calculate the predictions and confidence interval, and some other arguments that are passed to that.
+...
+#Q5: In our proportion bar chart, we needed to set group = 1. Why? In other words, what is the problem with these two graphs?
+#A: If group = 1 is not included, then all the bars in the plot will have the same height, a height of 1. The function geom_bar() assumes that the groups are equal to the x values since the stat computes the counts within the group.
+#A_Continued: The following code will produce the intended stacked bar charts for the case with no fill aesthetic.
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
+
+
