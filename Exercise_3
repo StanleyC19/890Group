@@ -1,0 +1,42 @@
+# Exercises 3.2.5
+library(nycflights13)
+library(tidyverse)
+# Q1: In a single pipeline for each condition, find all flights that meet the condition:
+
+# Had an arrival delay of two or more hours
+filter(flights, arr_delay >= 120)
+
+# Flew to Houston (IAH or HOU)
+filter(flights, dest == "IAH" | dest == "HOU
+
+# Were operated by United, American, or Delta
+filter(flights, carrier %in% c("AA", "DL", "UA"))
+
+# Departed in summer (July, August, and September)
+filter(flights, month >= 7, month <= 9)
+
+# Arrived more than two hours late, but didn’t leave late
+filter(flights, arr_delay > 120, dep_delay <= 0)
+
+# Were delayed by at least an hour, but made up over 30 minutes in flight
+filter(flights, dep_delay >= 60, dep_delay - arr_delay > 30)
+
+# Q2: Sort flights to find the flights with the longest departure delays. Find the flights that left earliest in the morning.
+arrange(flights, desc(dep_delay))
+arrange(flights, dep_delay)
+
+#Q3: Sort flights to find the fastest flights. (Hint: Try including a math calculation inside of your function.)
+flights %>% mutate(travel_time = ifelse((arr_time - dep_time < 0), 
+                                        2400+(arr_time - dep_time),
+                                        arr_time - dep_time)) %>% 
+  arrange(travel_time) %>% select(arr_time, dep_time, travel_time)
+
+# Q4: Was there a flight on every day of 2013?
+# A: Yes
+
+# Q5: Which flights traveled the farthest distance? Which traveled the least distance?
+arrange(flights, (distance))
+arrange(flights, desc(distance))
+
+# Q6: Does it matter what order you used filter() and arrange() if you’re using both? Why/why not? Think about the results and how much work the functions would have to do.
+# Yes, if you filter first then there is less work since fewer items are being arranged. If you arrange before filtering, the function will have to do more work.
